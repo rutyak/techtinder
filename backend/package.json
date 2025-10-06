@@ -23,7 +23,7 @@
     "express": "^5.1.0",
     "http": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
-    "mongodb-memory-server": "^10.2.1",
+    "mongodb-memory-server": "^10.2.2",
     "mongoose": "^8.16.4",
     "multer": "^2.0.2",
     "multer-storage-cloudinary": "^4.0.0",
