@@ -136,7 +136,7 @@ const Premium = () => {
   // ✅ Normal plans page if not premium
   return (
     <div className="h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100">
-      <div className="h-screen py-8 xl:pt-9 xl:pb-4 px-6 overflow-auto">
+      <div className="py-8 xl:pt-9 xl:pb-4 px-6 overflow-auto">
         {/* Header */}
         <div className="text-center mb-10 md:mb-12 xl:mb-14">
           <h1 className="text-3xl md:text-4xl xl:text-5xl font-extrabold text-purple-900 drop-shadow-lg">

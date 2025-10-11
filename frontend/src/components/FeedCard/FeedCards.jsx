@@ -72,7 +72,12 @@ function FeedCards({
       }
 
       const res = await axios.post(endpoint, {}, { withCredentials: true });
-      toast.success(res.data?.message || "Request sent successfully");
+
+      if (!toast.isActive("requestToast")) {
+        toast.success(res.data?.message || "Request sent successfully", {
+          toastId: "requestToast",
+        });
+      }
 
       // Remove from Redux store
       dispatch(removeFeeds(id));
@@ -83,7 +88,9 @@ function FeedCards({
       }
     } catch (error) {
       console.error(error);
-      toast.error("Something went wrong");
+      if (!toast.isActive("requestErrorToast")) {
+        toast.error("Something went wrong", { toastId: "requestErrorToast" });
+      }
     }
   }
 

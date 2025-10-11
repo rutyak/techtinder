@@ -66,11 +66,18 @@ const Profile = () => {
       );
 
       if (res.status === 200) {
-        toast.success(res?.data?.message);
+        if (!toast.isActive("editToast")) {
+          toast.success(res?.data?.message, { toastId: "editToast" });
+        }
+
         dispatch(addUser(res?.data?.user));
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Something went wrong");
+      if (!toast.isActive("editErrorToast")) {
+        toast.error(error.response?.data?.message || "Something went wrong", {
+          toastId: "editErrorToast",
+        });
+      }
     }
   };
 

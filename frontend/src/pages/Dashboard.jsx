@@ -20,7 +20,12 @@ function Dashboard() {
       });
       dispatch(addRequests(res.data?.requests));
     } catch (error) {
-      toast.error(error.data?.message || "Internal server error");
+      if (!toast.isActive("requestsErrorToast")) {
+        toast.error(error.data?.message || "Internal server error", {
+          toastId: "requestsErrorToast",
+        });
+      }
+
       console.error(error);
     }
   }
@@ -32,7 +37,12 @@ function Dashboard() {
       });
       dispatch(addConnections(res.data?.data));
     } catch (error) {
-      toast.error(error.data?.message || "Internal server error");
+      if (!toast.isActive("connectionErrorToast")) {
+        toast.error(error.data?.message || "Internal server error", {
+          toastId: "connectionErrorToast",
+        });
+      }
+
       consol.error(error);
     }
   }
@@ -47,14 +57,14 @@ function Dashboard() {
       data-testid="dashboard"
       className="h-[100dvh] flex flex-col lg:flex-row items-center"
     >
-      <div className="relative lg:fixed z-50 w-full h-[65px] lg:h-screen lg:max-w-[340px] flex flex-col border-r border-gray-200">
+      <div className="fixed z-50 w-full h-[65px] lg:h-screen lg:max-w-[340px] flex flex-col border-r border-gray-200">
         <Header />
         <div className="hidden lg:block">
           <ChatList />
         </div>
       </div>
 
-      <div className="flex-1 lg:min-h-screen relative w-full sm:bg-gray-100 overflow-auto lg:ml-[340px]">
+      <div className="flex-1  lg:min-h-screen relative w-full sm:bg-gray-100 overflow-auto mt-[65px] lg:mt-0 lg:ml-[340px]">
         <Outlet />
       </div>
     </div>

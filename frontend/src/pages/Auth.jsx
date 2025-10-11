@@ -88,14 +88,20 @@ function Auth() {
         const res = await axios.post(`${base_url}/send-otp`, {
           email: formData.email,
         });
-        toast.success(res.data?.message);
+        if (!toast.isActive("forgetPassToast")) {
+          toast.success(res.data?.message, { toastId: "forgetPassToast" });
+        }
+
         if (res.status === 200) setAuthView("verifyOtp");
       } else if (authView === "verifyOtp") {
         const res = await axios.post(`${base_url}/verify-otp`, {
           email: formData.email,
           otp: formData.otp,
         });
-        toast.success(res.data?.message);
+        if (!toast.isActive("verifyOtpToast")) {
+          toast.success(res.data?.message, { toastId: "verifyOtpToast" });
+        }
+
         if (res.status === 200) setAuthView("resetPassword");
       } else if (authView === "resetPassword") {
         if (formData.password !== formData.confirmPassword) {
@@ -106,12 +112,18 @@ function Auth() {
           email: formData.email,
           password: formData.password,
         });
-        toast.success(res.data?.message);
+        if (!toast.isActive("resetPassword")) {
+          toast.success(res.data?.message, { toastId: "resetPassword" });
+        }
+
         if (res.status === 200) setAuthView("login");
       }
     } catch (error) {
       const errorMsg = error.response?.data?.message || "Something went wrong";
-      toast.error(errorMsg);
+      if (!toast.isActive("resetPasswordErrorToast")) {
+        toast.error(errorMsg, { toastId: "resetPasswordErrorToast" });
+      }
+
       setError(errorMsg);
     } finally {
       setIsLoading(false);
@@ -298,7 +310,7 @@ function Auth() {
             </form>
 
             {/* Google Auth */}
-            {authView === "login" && (
+            {/* {authView === "login" && (
               <button
                 onClick={handleGoogleLogin}
                 className="w-full mt-4 flex items-center justify-center gap-2 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-all"
@@ -310,7 +322,7 @@ function Auth() {
                 />
                 Continue with Google
               </button>
-            )}
+            )} */}
 
             {/* Switch Login/Signup */}
             {(authView === "login" || authView === "signup") && (

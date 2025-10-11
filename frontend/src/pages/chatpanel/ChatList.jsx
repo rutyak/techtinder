@@ -22,7 +22,9 @@ function ChatList() {
 
       dispatch(addConnections(res.data?.data));
     } catch (error) {
-      toast.error(error.data?.message);
+      if (!toast.isActive("connectionErrorToast")) {
+        toast.error(error.data?.message, { toastId: "connectionErrorToast" });
+      }
       console.error(error);
     }
   }

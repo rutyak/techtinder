@@ -33,11 +33,17 @@ function Menu({ setIsOpenDropdown }) {
       );
       dispatch(removeUser());
       if (res.status === 200) {
-        toast.success(res.data.message);
+        if (!toast.isActive("logoutToast")) {
+          toast.success(res.data.message, { toastId: "logoutToast" });
+        }
         navigate("/");
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Logout failed");
+      if (!toast.isActive("logoutErrorToast")) {
+        toast.error(error?.response?.data?.message || "Logout failed", {
+          toastId: "logoutErrorToast",
+        });
+      }
     }
   }
 

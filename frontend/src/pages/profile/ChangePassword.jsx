@@ -21,7 +21,7 @@ function ChangePassword({ showPasswordFields, setShowPasswordFields }) {
       if (oldPassword === newPassword) {
         return toast.error("You have already used this password");
       }
-      
+
       if (newPassword !== confirmPassword) {
         return toast.error("New password and confirm password do not match.");
       }
@@ -41,9 +41,12 @@ function ChangePassword({ showPasswordFields, setShowPasswordFields }) {
       }
     } catch (error) {
       console.error(error);
-      toast.error(
-        error.response?.data?.message || "Failed to change password."
-      );
+      if (!toast.isActive("passwordChangeErrorToast")) {
+        toast.error(
+          error.response?.data?.message || "Failed to change password.",
+          { toastId: "passwordChangeErrorToast" }
+        );
+      }
     } finally {
       setIsLoading(false);
     }
