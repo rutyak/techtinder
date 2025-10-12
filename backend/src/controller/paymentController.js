@@ -61,8 +61,10 @@ const webhook = async (req, res) => {
   try {
     const webhookSignature = req.get("X-Razorpay-Signature");
 
+    const webhookBody = req.rawBody || JSON.stringify(req.body);
+
     const isWebhookValid = validateWebhookSignature(
-      JSON.stringify(req.body),
+      webhookBody,
       webhookSignature,
       process.env.RAZORPAY_WEBHOOK_SECRET
     );
@@ -71,11 +73,18 @@ const webhook = async (req, res) => {
       return res.status(400).json({ message: "Webhook signature is invalid" });
     }
 
-    const paymentDetails = req.body.payload.payment.entity;
+    const paymentDetails = req.body.payload?.payment?.entity;
+    if (!paymentDetails || !paymentDetails.order_id) {
+      return res.status(400).json({ message: "Invalid webhook payload" });
+    }
 
     const payment = await Payment.findOne({ orderId: paymentDetails.order_id });
     if (!payment) {
       return res.status(400).json({ message: "Payment record not found" });
+    }
+
+    if (payment.status === paymentDetails.status) {
+      return res.status(200).json({ message: "Payment already processed" });
     }
 
     payment.status = paymentDetails.status;
@@ -90,12 +99,13 @@ const webhook = async (req, res) => {
       await user.save();
     }
 
-    return res.status(200).json({ message: "Payment successful" });
+    return res.status(200).json({ message: "Webhook processed successfully" });
   } catch (error) {
     console.error("Webhook error:", error);
-    res
-      .status(500)
-      .json({ message: "Internal server error", error: error.message });
+    return res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+    });
   }
 };
 
