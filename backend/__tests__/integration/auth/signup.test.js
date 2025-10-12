@@ -6,8 +6,6 @@ const bcrypt = require("bcrypt");
 const { connectDB, disconnectDB, clearDB } = require("../../setup/testDB");
 require("dotenv").config();
 
-console.log("connection established: ", process.env.MongoDB_Test_URL);
-
 beforeAll(async () => {
   await connectDB();
 });

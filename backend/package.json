@@ -10,7 +10,8 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "jest --watch",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "build": "esbuild src/server.js --bundle --platform=node --outfile=dist/server.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
