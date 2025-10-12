@@ -10,6 +10,8 @@ import axios from "axios";
 import { addFeeds, removeFeeds } from "../../utils/feedSlice";
 import TechTinderIconInner from "../../assets/icons/TechTinderIconInner.svg";
 import BlueTick from "../../assets/icons/BlueTick.svg";
+import { useNavigate } from "react-router-dom";
+import { removeUser } from "../../utils/userSlice";
 
 const base_url = import.meta.env.VITE_APP_BACKEND_URL;
 
@@ -19,12 +21,15 @@ function FeedCards({
   showLabels = true,
   isPreview = false,
 }) {
+  const navigate = useNavigate();
+
   const feeds = useSelector((state) => state.feeds);
 
   const [people, setPeople] = useState(profile ? [profile] : []);
 
   const cardRefs = useRef([]);
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     if (!profile && Array.isArray(feeds)) {
@@ -40,6 +45,16 @@ function FeedCards({
       setPeople(res?.data?.feeds);
       dispatch(addFeeds(res?.data?.feeds));
     } catch (error) {
+      if (
+        error.response?.data?.message === "jwt expired" ||
+        error.response?.data?.message === "Please login"
+      ) {
+        if (!token.isActive("tokenExpired")) {
+          toast.error("Please login again", { testId: "tokenExpired" });
+        }
+        dispatch(removeUser());
+        navigate("/");
+      }
       console.error("error: ", error);
     }
   }

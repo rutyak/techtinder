@@ -77,7 +77,7 @@ describe("Premium", () => {
     await user.click(subscribeBtn[0]);
 
     expect(axios.post).toHaveBeenCalledWith(
-      expect.stringContaining("/payment/create"),
+      expect.stringContaining("/order/create"),
       expect.anything(),
       expect.anything()
     );

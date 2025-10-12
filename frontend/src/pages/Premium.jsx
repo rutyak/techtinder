@@ -58,7 +58,7 @@ const Premium = () => {
       let plan = type.toLowerCase();
 
       const res = await axios.post(
-        `${base_url}/payment/create`,
+        `${base_url}/order/create`,
         { membershipType: plan },
         { withCredentials: true }
       );

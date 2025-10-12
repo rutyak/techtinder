@@ -1,17 +1,27 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Header from "../components/Header";
 import { addConnections } from "../utils/connectionsSlice";
 import { toast } from "react-toastify";
 import { addRequests } from "../utils/requestsSlice";
 import ChatList from "./chatpanel/ChatList";
+import { removeUser } from "../utils/userSlice";
 
 const base_url = import.meta.env.VITE_APP_BACKEND_URL;
 
 function Dashboard() {
+  const userData = useSelector((state) => state.users);
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userData === null) {
+      navigate("/");
+    }
+  }, []);
 
   async function getRequests() {
     try {
@@ -20,12 +30,18 @@ function Dashboard() {
       });
       dispatch(addRequests(res.data?.requests));
     } catch (error) {
-      if (!toast.isActive("requestsErrorToast")) {
-        toast.error(error.data?.message || "Internal server error", {
-          toastId: "requestsErrorToast",
-        });
+      if (
+        error.response?.data?.message === "jwt expired" ||
+        error.response?.data?.message === "Please login"
+      ) {
+        if (!toast.isActive("authExpiredToast")) {
+          toast.error("Please log in again.", {
+            toastId: "authExpiredToast",
+          });
+        }
+        dispatch(removeUser());
+        navigate("/");
       }
-
       console.error(error);
     }
   }
@@ -37,13 +53,7 @@ function Dashboard() {
       });
       dispatch(addConnections(res.data?.data));
     } catch (error) {
-      if (!toast.isActive("connectionErrorToast")) {
-        toast.error(error.data?.message || "Internal server error", {
-          toastId: "connectionErrorToast",
-        });
-      }
-
-      consol.error(error);
+      console.error(error);
     }
   }
 
