@@ -145,7 +145,7 @@ function FeedCards({
               <div className="bg-black/40 p-3 rounded-lg">
                 <h2 className="text-xl font-bold flex items-center gap-2">
                   {person?.firstname} {person?.lastname}, {person?.age}
-                  {person?.isPremium && <img src={BlueTick} alt="BlueTick" />}
+                  {person?.isPremium && <img src={BlueTick} alt="BlueTick" className="w-4 h-4"/>}
                 </h2>
                 {showLabels && <p className="text-sm">{person.job}</p>}
                 {person?.isPremium && (
