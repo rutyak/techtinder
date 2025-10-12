@@ -2,6 +2,7 @@ const User = require("../model/user");
 const validateSignup = require("../utils/validateSignup");
 const validatePassword = require("../utils/validatePassword");
 const nodemailer = require("nodemailer");
+require("dotenv").config();
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -70,8 +71,6 @@ function logout(req, res) {
 async function sendOtp(req, res) {
   try {
     const { email } = req.body;
-
-    console.log("resetEmail: ", email);
 
     if (!email) return res.status(400).json({ message: "Email is required" });
 
@@ -165,8 +164,6 @@ async function resetPassword(req, res) {
 async function changePassword(req, res) {
   try {
     const { oldPassword, newPassword } = req.body;
-
-    console.log("logged in user email: ", req.user.email);
 
     const user = await User.findOne({ email: req.user.email }).select(
       "+password"

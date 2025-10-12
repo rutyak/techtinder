@@ -115,7 +115,7 @@ userSchema.methods.passwordCompare = async function (password) {
 
 userSchema.methods.generateAuthToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
-    expiresIn: "3h",
+    expiresIn: "2days",
   });
 };
 const User = mongoose.model("Users", userSchema);

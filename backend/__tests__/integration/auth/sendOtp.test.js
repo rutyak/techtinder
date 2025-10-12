@@ -1,12 +1,13 @@
+jest.mock("nodemailer");
+const sendMailMock = jest.fn();
+const nodemailer = require("nodemailer");
+nodemailer.createTransport.mockReturnValue({ sendMail: sendMailMock });
+
+// why import last? becuase mock will replace real nodemailer
 const app = require("../../../src/app");
 const User = require("../../../src/model/user");
 const { connectDB, clearDB, disconnectDB } = require("../../setup/testDB");
 const request = require("supertest");
-
-jest.mock("nodemailer");
-const nodemailer = require("nodemailer");
-const sendMailMock = jest.fn();
-nodemailer.createTransport.mockReturnValue({ sendMail: sendMailMock });
 
 beforeAll(async () => {
   await connectDB();
@@ -31,19 +32,11 @@ describe("POST /send-otp", () => {
   });
 
   it("should throw an error if email is not registered", async () => {
-    // const user = new User({
-    //   firstname: "Jon",
-    //   lastname: "Sinha",
-    //   email: "jon@gmail.com",
-    //   password: "Jon@123",
-    // });
-    // await user.save();
-
     const res = await request(app).post("/send-otp").send({
       email: "jon@gmail.com",
     });
 
-    const user = await user.findOne({ email: "jon@gmail.com" });
+    const user = await User.findOne({ email: "jon@gmail.com" });
     expect(user).toBeNull();
 
     expect(res.statusCode).toBe(404);
@@ -55,7 +48,7 @@ describe("POST /send-otp", () => {
       firstname: "Jon",
       lastname: "Sinha",
       email: "jon@gmail.com",
-      password: "Jon@123",
+      password: "Jon@1234",
     });
     await user.save();
 
@@ -63,7 +56,19 @@ describe("POST /send-otp", () => {
       email: "jon@gmail.com",
     });
 
+    if (res.error) {
+      console.error("error in send otp: ", res.error);
+    }
+
     expect(res.statusCode).toBe(200);
     expect(res.body).toHaveProperty("message", "OTP sent successfully");
+
+    expect(sendMailMock).toHaveBeenCalledTimes(1);
+    expect(sendMailMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        to: "jon@gmail.com",
+        subject: expect.stringContaining("OTP"),
+      })
+    );
   });
 });

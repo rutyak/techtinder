@@ -3,6 +3,7 @@ const userRouter = require("./router/userRouter");
 const cors = require("cors");
 const initializeSocket = require("./utils/socket");
 const http = require("http");
+const bodyParser = require('body-parser')
 
 const cookieParser = require("cookie-parser");
 
@@ -15,6 +16,12 @@ const chatRouter = require("./router/chatRouter");
 const app = express();
 const server = http.createServer(app);
 initializeSocket(server);
+
+app.post(
+  "/payment/webhook",
+  bodyParser.raw({ type: "application/json" }),
+  paymentRouter
+);
 
 app.use("/uploads", express.static("uploads"));
 
