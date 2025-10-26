@@ -9,7 +9,7 @@ const USER_SAFE_DATA = "firstname lastname age gender skills job imageurl isPrem
 
 userRouter.get("/user/requests", userAuth, async (req, res) => {
   try {
-    const loggedInUser_id = req.user._id;
+    const loggedInUser_id = req.user?._id;
 
     const requests = await ConnectionRequest.find({
       toUserId: loggedInUser_id,
@@ -26,7 +26,7 @@ userRouter.get("/user/requests", userAuth, async (req, res) => {
 
 userRouter.get("/user/connections", userAuth, async (req, res) => {
   try {
-    let loggedInUser_id = req.user._id;
+    let loggedInUser_id = req.user?._id;
 
     let connections = await ConnectionRequest.find({ 
       $or: [
@@ -38,10 +38,10 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
       .populate("toUserId", USER_SAFE_DATA);
 
     let data = connections.map((data) => {
-      if (data.fromUserId._id.equals(loggedInUser_id)) {
-        return data.toUserId;
+      if (data.fromUserId?._id.equals(loggedInUser_id)) {
+        return data?.toUserId;
       }
-      return data.fromUserId;
+      return data?.fromUserId;
     });
 
     res.status(200).json({ message: "Connections fetched successfully", data });
@@ -54,7 +54,7 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
 
 userRouter.get("/feeds", userAuth, async (req, res) => {
   try {
-    let loggedInUser_id = req.user._id;
+    let loggedInUser_id = req.user?._id;
     let page = parseInt(req.query.page) || 1;
     let limit = parseInt(req.query.limit) || 50;
     limit = limit > 50 ? 50 : limit;
