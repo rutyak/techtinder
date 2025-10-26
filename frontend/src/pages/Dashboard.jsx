@@ -74,7 +74,7 @@ function Dashboard() {
         </div>
       </div>
 
-      <div className="flex-1  lg:min-h-screen relative w-full sm:bg-gray-100 overflow-auto mt-[65px] lg:mt-0 lg:ml-[340px]">
+      <div className="flex-1  lg:h-screen relative w-full sm:bg-gray-100 overflow-auto mt-[65px] lg:mt-0 lg:ml-[340px]">
         <Outlet />
       </div>
     </div>

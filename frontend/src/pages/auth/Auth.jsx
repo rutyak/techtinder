@@ -2,8 +2,14 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { addUser } from "../utils/userSlice";
+import { addUser } from "../../utils/userSlice";
 import { useNavigate } from "react-router-dom";
+import Input from "../../components/ui/Input";
+import ResetPassword from "./ResetPassword";
+import Login from "./Login";
+import SignUp from "./SignUp";
+import VerifyOtp from "./VerifyOtp";
+import ForgotPassword from "./ForgotPassword";
 const base_url = import.meta.env.VITE_APP_BACKEND_URL;
 
 function Auth() {
@@ -16,6 +22,13 @@ function Auth() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const signupFields = [
+    { type: "text", name: "firstname", placeholder: "Enter first name" },
+    { type: "text", name: "lastname", placeholder: "Enter last name" },
+    { type: "email", name: "email", placeholder: "Email Address" },
+    { type: "password", name: "password", placeholder: "Enter password" },
+  ];
 
   // Redirect if already logged in
   useEffect(() => {
@@ -60,6 +73,8 @@ function Auth() {
   };
 
   const handleSubmit = async (e) => {
+    console.log("submit clicked");
+
     e.preventDefault();
     setIsLoading(true);
     setError("");
@@ -85,6 +100,8 @@ function Auth() {
         }
         setFormData({});
       } else if (authView === "forgotPassword") {
+        console.log("send otp on email : ", formData.email);
+
         const res = await axios.post(`${base_url}/send-otp`, {
           email: formData.email,
         });
@@ -171,114 +188,27 @@ function Auth() {
             {/* Form */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               {authView === "login" && (
-                <>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email Address"
-                    className="w-full p-2 rounded-lg border border-gray-400 placeholder:text-gray-400"
-                    onChange={handleChanges}
-                    required
-                  />
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter password"
-                    className="w-full p-2 rounded-lg border border-gray-400 placeholder:text-gray-400"
-                    onChange={handleChanges}
-                    required
-                  />
-                  <div
-                    className="text-sm text-blue-500 text-right mt-1 cursor-pointer"
-                    onClick={() => {
-                      setAuthView("forgotPassword");
-                      setError("");
-                    }}
-                  >
-                    Forgot Password?
-                  </div>
-                </>
+                <Login
+                  setAuthView={setAuthView}
+                  setError={setError}
+                  handleChanges={handleChanges}
+                />
               )}
 
               {authView === "signup" && (
-                <>
-                  <input
-                    type="text"
-                    name="firstname"
-                    placeholder="Enter first name"
-                    className="w-full p-2 rounded-lg border border-gray-400 placeholder:text-gray-400"
-                    onChange={handleChanges}
-                    required
-                  />
-                  <input
-                    type="text"
-                    name="lastname"
-                    placeholder="Enter last name"
-                    className="w-full p-2 rounded-lg border border-gray-400 placeholder:text-gray-400"
-                    onChange={handleChanges}
-                    required
-                  />
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email Address"
-                    className="w-full p-2 rounded-lg border border-gray-400 placeholder:text-gray-400"
-                    onChange={handleChanges}
-                    required
-                  />
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter password"
-                    className="w-full p-2 rounded-lg border border-gray-400 placeholder:text-gray-400"
-                    onChange={handleChanges}
-                    required
-                  />
-                </>
+                <SignUp handleChanges={handleChanges} />
               )}
 
               {authView === "forgotPassword" && (
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Enter your email"
-                  className="w-full p-2 rounded-lg border border-gray-400 placeholder:text-gray-400"
-                  onChange={handleChanges}
-                  required
-                />
+                <ForgotPassword handleChanges={handleChanges} />
               )}
 
               {authView === "verifyOtp" && (
-                <input
-                  type="text"
-                  name="otp"
-                  placeholder="Enter OTP"
-                  className="w-full p-2 rounded-lg border border-gray-400 placeholder:text-gray-400"
-                  onChange={handleChanges}
-                  required
-                  maxLength={6}
-                />
+                <VerifyOtp handleChanges={handleChanges} />
               )}
 
               {authView === "resetPassword" && (
-                <>
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="New Password"
-                    className="w-full p-2 rounded-lg border border-gray-400 placeholder:text-gray-400"
-                    onChange={handleChanges}
-                    required
-                  />
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Confirm Password"
-                    className="w-full p-2 rounded-lg border border-gray-400 placeholder:text-gray-400"
-                    onChange={handleChanges}
-                    required
-                  />
-                </>
+                <ResetPassword handleChanges={handleChanges} />
               )}
 
               <button
@@ -310,7 +240,7 @@ function Auth() {
             </form>
 
             {/* Google Auth */}
-            {/* {authView === "login" && (
+            {(authView === "login" || authView === "signup") && (
               <button
                 onClick={handleGoogleLogin}
                 className="w-full mt-4 flex items-center justify-center gap-2 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-all"
@@ -322,7 +252,7 @@ function Auth() {
                 />
                 Continue with Google
               </button>
-            )} */}
+            )}
 
             {/* Switch Login/Signup */}
             {(authView === "login" || authView === "signup") && (
