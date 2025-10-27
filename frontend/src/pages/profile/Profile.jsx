@@ -20,7 +20,7 @@ const Profile = () => {
   const [profileImageFile, setProfileImageFile] = useState();
   const [showPasswordFields, setShowPasswordFields] = useState(false);
   const [tags, setTags] = useState(
-    user.skills?.length ? user.skills : ["HTML", "CSS", "JS"]
+    user.skills?.length ? user?.skills : ["HTML", "CSS", "JS"]
   );
 
   const { firstname, lastname, age, gender, job, imageurl, skills } = user;
@@ -189,8 +189,8 @@ const Profile = () => {
                 Skills
               </label>
               <div className="flex flex-wrap gap-2">
-                {user.skills && user.skills.length > 0 ? (
-                  user.skills.map((skill, index) => (
+                {user?.skills && user?.skills?.length > 0 ? (
+                  user?.skills?.map((skill, index) => (
                     <span
                       key={index}
                       className="bg-blue-100 text-blue-800 px-3 py-1 text-sm rounded-full"

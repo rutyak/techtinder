@@ -42,7 +42,7 @@ function ChatWindow() {
 
       setMessages(formattedMessages);
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
     }
   }
 
@@ -82,7 +82,6 @@ function ChatWindow() {
     if (!targetUser.id) return;
 
     socketRef.current.emit("checkOnline", targetUser.id, (isOnline) => {
-      console.log("res from socket for online: ", isOnline);
       setIsOnline(isOnline);
     });
   }, [targetUser.id]);

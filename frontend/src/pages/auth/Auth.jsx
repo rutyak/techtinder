@@ -73,7 +73,6 @@ function Auth() {
   };
 
   const handleSubmit = async (e) => {
-    console.log("submit clicked");
 
     e.preventDefault();
     setIsLoading(true);
@@ -100,7 +99,6 @@ function Auth() {
         }
         setFormData({});
       } else if (authView === "forgotPassword") {
-        console.log("send otp on email : ", formData.email);
 
         const res = await axios.post(`${base_url}/send-otp`, {
           email: formData.email,
