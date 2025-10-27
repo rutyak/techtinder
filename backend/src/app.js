@@ -17,12 +17,6 @@ const app = express();
 const server = http.createServer(app);
 initializeSocket(server);
 
-app.post(
-  "/payment/webhook",
-  bodyParser.raw({ type: "application/json" }),
-  paymentRouter
-);
-
 app.use("/uploads", express.static("uploads"));
 
 const corsOptions = {
