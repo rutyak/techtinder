@@ -56,7 +56,7 @@ const createOrder = async (req, res) => {
 };
 
 const webhook = async (req, res) => {
-  console.log("webhook is called...");
+  console.log("webhook is called...: ", req.body);
 
   try {
     const webhookSignature = req.get("X-Razorpay-Signature");
@@ -69,11 +69,13 @@ const webhook = async (req, res) => {
       process.env.RAZORPAY_WEBHOOK_SECRET
     );
 
+    console.log("isWebhookValid: ", isWebhookValid);
+
     if (!isWebhookValid) {
       return res.status(400).json({ message: "Webhook signature is invalid" });
     }
 
-    const paymentDetails = req.body.payload?.payment?.entity;
+    const paymentDetails = req.body?.payload?.payment?.entity;
     if (!paymentDetails || !paymentDetails.order_id) {
       return res.status(400).json({ message: "Invalid webhook payload" });
     }
@@ -91,6 +93,7 @@ const webhook = async (req, res) => {
     await payment.save();
 
     const user = await User.findById(payment.userId);
+    
     console.log("paymentDetails webhook: ", paymentDetails);
 
     if (user && paymentDetails.status == "captured") {
