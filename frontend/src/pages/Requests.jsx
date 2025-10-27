@@ -18,11 +18,7 @@ const Requests = () => {
         { withCredentials: true }
       );
       dispatch(removeRequest(id));
-      if (!toast.isActive("reqAcceptToast")) {
-        toast.success(res.data?.message || "Request accepted!", {
-          toastId: "reqAcceptToast",
-        });
-      }
+      toast.success(res.data?.message || "Request accepted!");
     } catch (error) {
       toast.error(error.message || "Something is wrong");
       console.error(error);
@@ -37,11 +33,8 @@ const Requests = () => {
         { withCredentials: true }
       );
       dispatch(removeRequest(id));
-      if (!toast.isActive("reqRejectToast")) {
-        toast.success(res.data?.message || "Request rejected!", {
-          toastId: "reqRejectToast",
-        });
-      }
+
+      toast.success(res.data?.message || "Request rejected!");
     } catch (error) {
       toast.error(error.message || "Something is wrong");
       console.error(error);

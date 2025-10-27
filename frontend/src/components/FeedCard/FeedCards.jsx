@@ -88,12 +88,8 @@ function FeedCards({
 
       const res = await axios.post(endpoint, {}, { withCredentials: true });
 
-      if (!toast.isActive("requestToast")) {
-        toast.success(res.data?.message || "Request sent successfully", {
-          toastId: "requestToast",
-        });
-      }
-
+      toast.success(res.data?.message || "Request sent successfully");
+      
       // Remove from Redux store
       dispatch(removeFeeds(id));
 

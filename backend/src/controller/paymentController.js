@@ -93,7 +93,7 @@ const webhook = async (req, res) => {
     const user = await User.findById(payment.userId);
     console.log("paymentDetails webhook: ", paymentDetails);
 
-    if (user && paymentDetails.status === "created") {
+    if (user && paymentDetails.status == "captured") {
       user.isPremium = true;
       user.membershipType = payment.notes.membershipType;
       await user.save();
