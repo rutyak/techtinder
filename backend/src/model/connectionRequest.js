@@ -14,13 +14,18 @@ const connectionRequest = new mongoose.Schema({
   status: {
     type: String,
     enum: {
-      values: ["interested", "ignored", "accepted", "rejected"],
-      messsage: "Invalid status",
+      values: [
+        "interested",
+        "ignored",
+        "accepted",
+        "rejected",
+        "superinterested",
+      ],
+      message: "Invalid status",
     },
-    default: "interested",
   },
   updatedAt: {
-    type: Date
+    type: Date,
   },
   createdAt: {
     type: Date,
@@ -37,8 +42,10 @@ connectionRequest.pre("save", function (next) {
   next();
 });
 
-const ConnectionRequest = mongoose.model(
-  "ConnectionRequest",
-  connectionRequest
-);
+// ✅ Add this before defining the model
+delete mongoose.models.ConnectionRequest;
+
+// ✅ Now safely create model
+const ConnectionRequest = mongoose.model("ConnectionRequest", connectionRequest);
+
 module.exports = ConnectionRequest;
