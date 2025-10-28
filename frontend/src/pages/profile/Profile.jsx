@@ -216,7 +216,7 @@ const Profile = () => {
               firstname: formData?.firstname,
               lastname: formData?.lastname,
               age: formData?.age,
-              job: tags.length ? formData?.job : "Not specified",
+              job: tags?.length ? formData?.job : "Not specified",
               distance: 0,
               imageurl: imagePreview || formData?.imageurl,
             }}

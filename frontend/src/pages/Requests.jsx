@@ -2,10 +2,13 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { removeRequest } from "../utils/requestsSlice";
+import { useGlobalVariable } from "../context/GlobalContext";
 
 const base_url = import.meta.env.VITE_APP_BACKEND_URL;
 
 const Requests = () => {
+  const { getConnections } = useGlobalVariable();
+  
   const requests = useSelector((state) => state.requests);
 
   console.log("requests: ", requests);
@@ -19,6 +22,8 @@ const Requests = () => {
         {},
         { withCredentials: true }
       );
+
+      await getConnections();
       dispatch(removeRequest(id));
       toast.success(res.data?.message || "Request accepted!");
     } catch (error) {
@@ -34,8 +39,9 @@ const Requests = () => {
         {},
         { withCredentials: true }
       );
-      dispatch(removeRequest(id));
 
+      await getConnections();
+      dispatch(removeRequest(id));
       toast.success(res.data?.message || "Request rejected!");
     } catch (error) {
       toast.error(error.message || "Something is wrong");

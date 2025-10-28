@@ -4,34 +4,41 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addConnections } from "../../utils/connectionsSlice";
 import axios from "axios";
+import { useGlobalVariable } from "../../context/GlobalContext";
 
 const base_url = import.meta.env.VITE_APP_BACKEND_URL;
 
 function ChatList() {
+  const { search } = useGlobalVariable();
+
   const connections = useSelector((state) => state.connections);
+
+  const filteredConnections = connections?.filter((person) =>
+    person?.firstname.toLowerCase().includes(search.toLowerCase())
+  );
 
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
-  async function getConnections() {
-    try {
-      const res = await axios.get(`${base_url}/user/connections`, {
-        withCredentials: true,
-      });
+  // async function getConnections() {
+  //   try {
+  //     const res = await axios.get(`${base_url}/user/connections`, {
+  //       withCredentials: true,
+  //     });
 
-      dispatch(addConnections(res.data?.data));
-    } catch (error) {
-      if (!toast.isActive("connectionErrorToast")) {
-        toast.error(error.data?.message, { toastId: "connectionErrorToast" });
-      }
-      console.error(error);
-    }
-  }
+  //     dispatch(addConnections(res.data?.data));
+  //   } catch (error) {
+  //     if (!toast.isActive("connectionErrorToast")) {
+  //       toast.error(error.data?.message, { toastId: "connectionErrorToast" });
+  //     }
+  //     console.error(error);
+  //   }
+  // }
 
-  useEffect(() => {
-    getConnections();
-  }, []);
+  // useEffect(() => {
+  //   getConnections();
+  // }, []);
 
   function handleClick(id, firstname, imageurl) {
     if (window.innerWidth < 1024) {
@@ -49,8 +56,8 @@ function ChatList() {
     <div className="h-full flex-1 overflow-y-auto md:bg-gray-50">
       <h3 className="px-4 pt-2 pb-2 text-gray-500 font-medium">Chats</h3>
       <div className="space-y-2 px-2">
-        {connections && connections.length > 0 ? (
-          connections.map(
+        {filteredConnections && filteredConnections.length > 0 ? (
+          filteredConnections.map(
             (person) =>
               person !== null && (
                 <div

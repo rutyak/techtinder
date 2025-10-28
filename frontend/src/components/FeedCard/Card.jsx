@@ -1,6 +1,7 @@
 import BlueTick from "../../assets/icons/BlueTick.svg";
 
-const Card = ({ person, showLabels }) => {
+const Card = ({ person }) => {
+
   return (
     <div
       style={{
@@ -17,7 +18,7 @@ const Card = ({ person, showLabels }) => {
             <img src={BlueTick} alt="BlueTick" className="w-4 h-4" />
           )}
         </h2>
-        {showLabels && <p className="text-sm">{person.job}</p>}
+        <p className="text-sm">{person?.job}</p>
         {person?.isPremium && (
           <p className="text-xs text-blue-300 mt-1">• Premium Verified</p>
         )}

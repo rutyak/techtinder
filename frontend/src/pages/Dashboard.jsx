@@ -3,15 +3,17 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Header from "../components/Header";
-import { addConnections } from "../utils/connectionsSlice";
 import { toast } from "react-toastify";
 import { addRequests } from "../utils/requestsSlice";
 import ChatList from "./chatpanel/ChatList";
 import { removeUser } from "../utils/userSlice";
+import { useGlobalVariable } from "../context/GlobalContext";
 
 const base_url = import.meta.env.VITE_APP_BACKEND_URL;
 
 function Dashboard() {
+  const { getConnections } = useGlobalVariable();
+
   const userData = useSelector((state) => state.users);
 
   const dispatch = useDispatch();
@@ -42,17 +44,6 @@ function Dashboard() {
         dispatch(removeUser());
         navigate("/");
       }
-      console.error(error);
-    }
-  }
-
-  async function getConnections() {
-    try {
-      const res = await axios.get(`${base_url}/user/connections`, {
-        withCredentials: true,
-      });
-      dispatch(addConnections(res.data?.data));
-    } catch (error) {
       console.error(error);
     }
   }
