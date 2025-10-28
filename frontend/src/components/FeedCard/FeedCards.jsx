@@ -12,6 +12,7 @@ import TechTinderIconInner from "../../assets/icons/TechTinderIconInner.svg";
 import BlueTick from "../../assets/icons/BlueTick.svg";
 import { useNavigate } from "react-router-dom";
 import { removeUser } from "../../utils/userSlice";
+import Card from "./Card";
 
 const base_url = import.meta.env.VITE_APP_BACKEND_URL;
 
@@ -23,19 +24,23 @@ function FeedCards({
 }) {
   const navigate = useNavigate();
 
-  const feeds = useSelector((state) => state.feeds);
+  const feeds = useSelector((state) => state?.feeds);
 
   const [people, setPeople] = useState(profile ? [profile] : []);
+  const [currIndex, setCurrIndex] = useState();
 
   const cardRefs = useRef([]);
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     if (!profile && Array.isArray(feeds)) {
       setPeople(feeds);
     }
   }, [feeds]);
+
+  useEffect(() => {
+    setCurrIndex(people?.length - 1);
+  }, [people]);
 
   async function getFeedData() {
     try {
@@ -66,7 +71,7 @@ function FeedCards({
   }, []);
 
   useEffect(() => {
-    cardRefs.current = people.map(() => createRef());
+    cardRefs.current = people?.map(() => createRef());
   }, [people]);
 
   useEffect(() => {
@@ -76,6 +81,8 @@ function FeedCards({
   }, [profile]);
 
   async function handleCardLeft(dir, id) {
+    console.log("dir", dir, "id :", id);
+
     try {
       let endpoint = "";
       if (dir === "right") {
@@ -89,7 +96,7 @@ function FeedCards({
       const res = await axios.post(endpoint, {}, { withCredentials: true });
 
       toast.success(res.data?.message || "Request sent successfully");
-      
+
       // Remove from Redux store
       dispatch(removeFeeds(id));
 
@@ -129,33 +136,9 @@ function FeedCards({
 
       <div className="relative w-[95%] sm:w-[310px] h-full sm:h-[420px] flex justify-center">
         {people?.map((person, index) => {
-          const CardContent = (
-            <div
-              style={{
-                backgroundImage: `url(${person?.imageurl})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-              className="w-full h-full rounded-2xl flex items-end p-4 text-white shadow-lg"
-            >
-              <div className="bg-black/40 p-3 rounded-lg">
-                <h2 className="text-xl font-bold flex items-center gap-2">
-                  {person?.firstname} {person?.lastname}, {person?.age}
-                  {person?.isPremium && <img src={BlueTick} alt="BlueTick" className="w-4 h-4"/>}
-                </h2>
-                {showLabels && <p className="text-sm">{person.job}</p>}
-                {person?.isPremium && (
-                  <p className="text-xs text-blue-300 mt-1">
-                    • Premium Verified
-                  </p>
-                )}
-              </div>
-            </div>
-          );
-
           return isPreview ? (
             <div key={person?._id} className="absolute w-full h-full">
-              {CardContent}
+              <Card person={person} />
             </div>
           ) : (
             <TinderCard
@@ -163,10 +146,11 @@ function FeedCards({
               key={person?._id}
               preventSwipe={["down"]}
               onSwipe={(dir) => handleCardLeft(dir, person?._id)}
+              onCardLeftScreen={() => setCurrIndex(index - 1)}
               swipeRequirementType="position"
               className="absolute w-full h-full"
             >
-              {CardContent}
+              <Card person={person} showLabels={showLabels} />
             </TinderCard>
           );
         })}
@@ -176,21 +160,21 @@ function FeedCards({
         <div className="flex gap-8 mt-6 mb-4">
           <button
             aria-label="left swipe"
-            onClick={() => swipe("left")}
+            onClick={() => handleCardLeft("left", people[currIndex]?._id)}
             className="p-4 rounded-full bg-red-100 text-red-500 shadow-lg hover:scale-110 transition"
           >
             <RiCloseLargeFill size={28} />
           </button>
           <button
             aria-label="up-swipe"
-            onClick={() => swipe("up")}
+            onClick={() => handleCardLeft("up", people[currIndex]?._id)}
             className="p-4 rounded-full bg-blue-100 text-blue-500 shadow-lg hover:scale-110 transition"
           >
             <GoStarFill size={28} />
           </button>
           <button
             aria-label="right-swipe"
-            onClick={() => swipe("right")}
+            onClick={() => handleCardLeft("right", people[currIndex]?._id)}
             className="p-4 rounded-full bg-green-100 text-green-500 shadow-lg hover:scale-110 transition"
           >
             <BiSolidLike size={28} />
