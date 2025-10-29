@@ -3,7 +3,7 @@ const userRouter = require("./router/userRouter");
 const cors = require("cors");
 const initializeSocket = require("./utils/socket");
 const http = require("http");
-const bodyParser = require('body-parser')
+const bodyParser = require("body-parser");
 
 const cookieParser = require("cookie-parser");
 
@@ -35,6 +35,7 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
+app.use(passport.initialize());
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
