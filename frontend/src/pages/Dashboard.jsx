@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -6,7 +6,7 @@ import Header from "../components/Header";
 import { toast } from "react-toastify";
 import { addRequests } from "../utils/requestsSlice";
 import ChatList from "./chatpanel/ChatList";
-import { removeUser } from "../utils/userSlice";
+import { addUser, removeUser } from "../utils/userSlice";
 import { useGlobalVariable } from "../context/GlobalContext";
 
 const base_url = import.meta.env.VITE_APP_BACKEND_URL;
@@ -18,6 +18,16 @@ function Dashboard() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location?.search);
+    const userDataFromGoogle = params.get("user");
+
+    console.log("userData in auth: ", JSON.parse(userDataFromGoogle));
+
+    dispatch(addUser(JSON.parse(userDataFromGoogle)));
+  }, [location]);
 
   useEffect(() => {
     if (userData === null) {

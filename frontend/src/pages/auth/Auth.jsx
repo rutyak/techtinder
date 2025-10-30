@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { addUser } from "../../utils/userSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Input from "../../components/ui/Input";
 import ResetPassword from "./ResetPassword";
 import Login from "./Login";
@@ -22,15 +22,7 @@ function Auth() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const signupFields = [
-    { type: "text", name: "firstname", placeholder: "Enter first name" },
-    { type: "text", name: "lastname", placeholder: "Enter last name" },
-    { type: "email", name: "email", placeholder: "Email Address" },
-    { type: "password", name: "password", placeholder: "Enter password" },
-  ];
-
-  // Redirect if already logged in
+ 
   useEffect(() => {
     let token = document.cookie
       .split(";")
@@ -41,7 +33,6 @@ function Auth() {
     }
   }, []);
 
-  // Close modal on outside click, ESC, or scroll
   useEffect(() => {
     if (!loginToggle) return;
 
@@ -73,7 +64,6 @@ function Auth() {
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
     setIsLoading(true);
     setError("");
@@ -99,7 +89,6 @@ function Auth() {
         }
         setFormData({});
       } else if (authView === "forgotPassword") {
-
         const res = await axios.post(`${base_url}/send-otp`, {
           email: formData.email,
         });
@@ -147,7 +136,7 @@ function Auth() {
 
   // Google Auth Redirect
   const handleGoogleLogin = () => {
-    window.location.href = `${base_url}/auth/google`;
+    window.location.href = `${base_url}/google`;
   };
 
   return (
