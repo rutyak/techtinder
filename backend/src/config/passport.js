@@ -1,22 +1,31 @@
 const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("../model/user");
+require("dotenv").config();
+
+const isProduction = process.env.NODE_ENV === "production";
+
+console.log("process.env.BASE_URL :", process.env.BASE_URL_LOCAL);
 
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `${process.env.CLIENT_URL}/auth/google/callback`,
+      callbackURL: isProduction
+        ? `${process.env.BASE_URL}/auth/google/callback`
+        : `${process.env.BASE_URL_LOCAL}/auth/google/callback`,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
         let user = await User.findOne({ googleId: profile.id });
-
+        console.log("profile: ", profile);
+        const name = profile?.displayName?.split(" ");
         if (!user) {
           user = await User.create({
             googleId: profile?.id,
-            name: profile?.displayName,
+            firstname: name[0],
+            lastname: name[1],
             email: profile?.emails?.[0]?.value,
             profilePic: profile?.photos?.[0]?.value,
           });
@@ -24,7 +33,7 @@ passport.use(
 
         return done(null, user);
       } catch (error) {
-        return done(err, null);
+        return done(error, null);
       }
     }
   )

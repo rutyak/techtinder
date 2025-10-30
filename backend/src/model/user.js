@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
     maxLength: 50,
     match: [
-      /^[a-zA-Z\-']+$/,
+      /^[a-zA-Z\-'\s]+$/,
       "First name can only contain letters, hyphens and apostrophes",
     ],
   },
@@ -32,7 +32,6 @@ const userSchema = new mongoose.Schema({
     required: [true, "Email required"],
     lowercase: true,
     trim: true,
-    unique: true,
     validate: {
       validator: function (value) {
         return validator.isEmail(value);
@@ -71,7 +70,6 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
     validate: {
       validator: function (value) {
         return validator.isStrongPassword(value, {

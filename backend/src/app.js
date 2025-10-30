@@ -4,6 +4,8 @@ const cors = require("cors");
 const initializeSocket = require("./utils/socket");
 const http = require("http");
 const bodyParser = require("body-parser");
+const passport = require("passport");
+require("./config/passport");
 
 const cookieParser = require("cookie-parser");
 

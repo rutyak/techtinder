@@ -11,6 +11,9 @@ const {
 } = require("../controller/authController");
 const passport = require("passport");
 const authRouter = express.Router();
+require("dotenv").config();
+
+const isProduction = process.env.NODE_ENV === "production";
 
 authRouter.post("/signup", signUp);
 
@@ -22,19 +25,39 @@ authRouter.get(
 );
 
 authRouter.get(
-  "/google/callback",
+  "/auth/google/callback",
   passport.authenticate("google", {
     failureRedirect: "/login",
     session: false,
   }),
-  (req, res) => {
-    // Generate JWT after successful login
-    const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
+  async (req, res) => {
+    try {
+      const user = req.user;
+      console.log("user in final google call: ", user);
 
-    // Redirect back to frontend with token
-    res.redirect(`${process.env.CLIENT_URL}/auth-success?token=${token}`);
+      const token = await user.generateAuthToken();
+
+      res.cookie("jwtToken", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+
+      const redirectURL =
+        process.env.NODE_ENV === "production"
+          ? `${process.env.CLIENT_URL}/dashboard`
+          : `${process.env.CLIENT_URL_LOCAL}/dashboard`;
+
+      const query = new URLSearchParams({
+        user: JSON.stringify(user),
+      }).toString();
+
+      res.redirect(`${redirectURL}?${query}`);
+    } catch (error) {
+      console.error("Error setting token:", error);
+      res.redirect("/login");
+    }
   }
 );
 
