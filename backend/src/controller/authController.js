@@ -85,7 +85,7 @@ async function sendOtp(req, res) {
     await user.save();
 
     await transporter.sendMail({
-      from: `"TechTinder Support" <${process.env.EMAIL_USER}>`,
+      from: `"ConnectEdge Support" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "Password Reset OTP",
       text: `Your OTP is ${otp}. It is valid for 10 minutes.`,

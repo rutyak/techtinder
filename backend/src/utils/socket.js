@@ -15,7 +15,7 @@ function getSecretRoomId(userId, targetUserId) {
 const initializeSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: ["http://localhost:5173", "https://techtinder.netlify.app"],
+      origin: ["http://localhost:5173", "https://connectedge.netlify.app"],
       methods: ["GET", "POST"],
       credentials: true,
     },

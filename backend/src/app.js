@@ -22,7 +22,7 @@ initializeSocket(server);
 app.use("/uploads", express.static("uploads"));
 
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://techtinder.netlify.app"],
+  origin: ["http://localhost:5173", "https://connectedge.netlify.app"],
   methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: [
     "Content-Type",
