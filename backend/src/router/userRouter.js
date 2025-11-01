@@ -5,7 +5,8 @@ const userAuth = require("../middleware/userAuth");
 const { populate } = require("../model/connectionRequest");
 const ConnectionRequest = require("../model/connectionRequest");
 
-const USER_SAFE_DATA = "firstname lastname age gender skills job imageurl isPremium";
+const USER_SAFE_DATA =
+  "firstname lastname age gender skills job imageurl isPremium";
 
 userRouter.get("/user/requests", userAuth, async (req, res) => {
   try {
@@ -13,7 +14,7 @@ userRouter.get("/user/requests", userAuth, async (req, res) => {
 
     const requests = await ConnectionRequest.find({
       toUserId: loggedInUser_id,
-      status: "interested",
+      status: { $in: ["interested", "superinterested"] },
     }).populate("fromUserId", USER_SAFE_DATA);
 
     res.status(200).json({ message: "Fetched successfully!!", requests });
@@ -28,7 +29,7 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
   try {
     let loggedInUser_id = req.user?._id;
 
-    let connections = await ConnectionRequest.find({ 
+    let connections = await ConnectionRequest.find({
       $or: [
         { fromUserId: loggedInUser_id, status: "accepted" },
         { toUserId: loggedInUser_id, status: "accepted" },

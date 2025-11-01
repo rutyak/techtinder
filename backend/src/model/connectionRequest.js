@@ -42,10 +42,6 @@ connectionRequest.pre("save", function (next) {
   next();
 });
 
-// ✅ Add this before defining the model
-delete mongoose.models.ConnectionRequest;
-
-// ✅ Now safely create model
 const ConnectionRequest = mongoose.model("ConnectionRequest", connectionRequest);
 
 module.exports = ConnectionRequest;

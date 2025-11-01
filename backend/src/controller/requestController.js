@@ -48,6 +48,8 @@ const requestSend = async (req, res) => {
       status,
     });
 
+    console.log("connectionReq in api: ", connectionReq);
+
     res.status(201).json({
       message: "Request sent successfully",
       connectionReq,
