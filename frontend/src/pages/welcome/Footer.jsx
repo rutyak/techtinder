@@ -104,7 +104,7 @@ function Footer() {
         {/* Copyright */}
         <div className="text-center mt-6">
           <p className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} TechTinder. All rights reserved.
+            © {new Date().getFullYear()} ConnectEdge. All rights reserved.
           </p>
           <p className="text-gray-600 text-xs mt-2">
             Designed with ❤️ by Rutik Khandekar

@@ -69,7 +69,7 @@ const Premium = () => {
         key: keyId,
         amount,
         currency,
-        name: "TechTinder",
+        name: "ConnectEdge",
         description: "Connect to other developers",
         order_id: orderId,
         prefill: {
@@ -118,7 +118,7 @@ const Premium = () => {
               exclusive club
             </span>
             . Unlock unlimited features, faster access, and a premium experience
-            on TechTinder 🚀
+            on ConnectEdge 🚀
           </p>
 
           {/* Action Button */}

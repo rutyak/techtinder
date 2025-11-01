@@ -17,7 +17,7 @@ describe("WelcomeHeader", () => {
 
   it("render application name", () => {
     renderWithRouter();
-    expect(screen.getByText("TechTinder")).toBeInTheDocument();
+    expect(screen.getByText("ConnectEdge")).toBeInTheDocument();
   });
 
   it("render navigation links", () => {

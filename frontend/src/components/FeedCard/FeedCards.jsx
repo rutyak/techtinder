@@ -28,22 +28,18 @@ function FeedCards({
   const cardRefs = useRef([]);
   const dispatch = useDispatch();
 
-  // ✅ Fetch feed data once (only if not profile preview)
   useEffect(() => {
     if (!profile) getFeedData();
   }, []);
 
-  // ✅ Sync people with redux feeds
   useEffect(() => {
     if (!profile && Array.isArray(feeds)) setPeople(feeds);
   }, [feeds]);
 
-  // ✅ Set initial currIndex
   useEffect(() => {
     if (people.length > 0) setCurrIndex(people.length - 1);
   }, [people]);
 
-  // ✅ Create stable refs for all cards
   useEffect(() => {
     if (people.length > 0) {
       cardRefs.current = Array(people.length)
@@ -52,12 +48,10 @@ function FeedCards({
     }
   }, [people]);
 
-  // ✅ If preview card
   useEffect(() => {
     if (profile) setPeople([profile]);
   }, [profile]);
 
-  // ✅ Fetch feed data function
   async function getFeedData() {
     try {
       const res = await axios.get(`${base_url}/feeds`, {

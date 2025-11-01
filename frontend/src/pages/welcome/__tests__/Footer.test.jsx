@@ -20,7 +20,7 @@ describe("Footer", () => {
       screen.getByText(/Designed with ❤️ by Rutik Khandekar/i)
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/TechTinder. All rights reserved./i)
+      screen.getByText(/ConnectEdge. All rights reserved./i)
     ).toBeInTheDocument();
   });
 

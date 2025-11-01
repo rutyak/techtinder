@@ -16,14 +16,14 @@ function Reviews() {
       name: "Raghav Shrivastav",
       position: "Web Designer",
       rating: 5,
-      text: "TechTinder revolutionized my job search! The AI matching is incredibly accurate. I landed my dream job at Google within 2 weeks of using the platform. The interview prep resources were especially helpful.",
+      text: "ConnectEdge revolutionized my job search! The AI matching is incredibly accurate. I landed my dream job at Google within 2 weeks of using the platform. The interview prep resources were especially helpful.",
     },
     {
       id: 2,
       name: "Priya Patel",
       position: "Frontend Developer",
       rating: 4,
-      text: "As a female developer, I was hesitant about job platforms, but TechTinder's inclusive approach impressed me. The skill-based matching connected me with companies that truly valued my expertise in React and Node.js.",
+      text: "As a female developer, I was hesitant about job platforms, but ConnectEdge's inclusive approach impressed me. The skill-based matching connected me with companies that truly valued my expertise in React and Node.js.",
     },
     {
       id: 3,
@@ -37,7 +37,7 @@ function Reviews() {
       name: "Neha Gupta",
       position: "Frontend Developer",
       rating: 5,
-      text: "TechTinder's salary transparency feature saved me so much time. No more going through lengthy interview processes only to find the compensation wasn't competitive. Found a perfect match with a 30% salary bump!",
+      text: "ConnectEdge's salary transparency feature saved me so much time. No more going through lengthy interview processes only to find the compensation wasn't competitive. Found a perfect match with a 30% salary bump!",
     },
     {
       id: 5,
@@ -51,14 +51,14 @@ function Reviews() {
       name: "Ananya Sharma",
       position: "Frontend Developer",
       rating: 5,
-      text: "As a recent grad, I was struggling to get noticed. TechTinder's profile optimization tips and new talent program helped me stand out. Got three offers within a month! The mentorship feature was invaluable.",
+      text: "As a recent grad, I was struggling to get noticed. ConnectEdge's profile optimization tips and new talent program helped me stand out. Got three offers within a month! The mentorship feature was invaluable.",
     },
     {
       id: 4,
       name: "Neha Gupta",
       position: "Frontend Developer",
       rating: 5,
-      text: "TechTinder's salary transparency feature saved me so much time. No more going through lengthy interview processes only to find the compensation wasn't competitive. Found a perfect match with a 30% salary bump!",
+      text: "ConnectEdge's salary transparency feature saved me so much time. No more going through lengthy interview processes only to find the compensation wasn't competitive. Found a perfect match with a 30% salary bump!",
     },
     {
       id: 5,
@@ -72,7 +72,7 @@ function Reviews() {
       name: "Ananya Sharma",
       position: "Frontend Developer",
       rating: 5,
-      text: "As a recent grad, I was struggling to get noticed. TechTinder's profile optimization tips and new talent program helped me stand out. Got three offers within a month! The mentorship feature was invaluable.",
+      text: "As a recent grad, I was struggling to get noticed. ConnectEdge's profile optimization tips and new talent program helped me stand out. Got three offers within a month! The mentorship feature was invaluable.",
     },
   ];
 
