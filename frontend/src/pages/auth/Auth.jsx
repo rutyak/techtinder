@@ -20,9 +20,11 @@ function Auth() {
   const [error, setError] = useState("");
   const modelRef = useRef(null);
 
+  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
- 
+
   useEffect(() => {
     let token = document.cookie
       .split(";")
@@ -78,6 +80,8 @@ function Auth() {
         if (!toast.isActive("authToast")) {
           toast.success(res.data?.message, { toastId: "authToast" });
         }
+
+        console.log("res.data?.user: ", res.data?.user);
 
         if (res.data?.user) {
           dispatch(addUser(res.data?.user));

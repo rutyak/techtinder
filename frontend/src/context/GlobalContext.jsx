@@ -23,6 +23,9 @@ export function GlobalProvider({ children }) {
       const res = await axios.get(`${base_url}/user/connections`, {
         withCredentials: true,
       });
+
+      console.log(res.data?.data);
+
       dispatch(addConnections(res.data?.data));
     } catch (error) {
       console.error(error);

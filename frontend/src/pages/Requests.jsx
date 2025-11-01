@@ -3,12 +3,13 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { removeRequest } from "../utils/requestsSlice";
 import { useGlobalVariable } from "../context/GlobalContext";
+import { FaHeart } from "react-icons/fa"; 
 
 const base_url = import.meta.env.VITE_APP_BACKEND_URL;
 
 const Requests = () => {
   const { getConnections } = useGlobalVariable();
-  
+
   const requests = useSelector((state) => state.requests);
 
   console.log("requests: ", requests);
@@ -65,8 +66,19 @@ const Requests = () => {
                 req?.fromUserId !== null && (
                   <div
                     key={req._id}
-                    className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border rounded-xl p-5 bg-white shadow-lg hover:shadow-md transition"
+                    className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-4 border rounded-xl p-5 bg-white shadow-lg hover:shadow-md transition"
                   >
+                    {/* Super Interested Icon Badge */}
+                    {req.status === "superinterested" && (
+                      <div className="absolute top-3 right-3">
+                        <FaHeart
+                          className="text-red-500 text-xl animate-pulse"
+                          title="Super Interested ❤️"
+                        />
+                      </div>
+                    )}
+
+                    {/* User Info */}
                     <div className="flex items-center gap-4 flex-1">
                       <img
                         src={req.fromUserId?.imageurl}
@@ -82,7 +94,7 @@ const Requests = () => {
                           {req.fromUserId?.age}
                         </h3>
                         <p className="text-sm text-gray-500">
-                          {req.fromUserId?.job}
+                          {req.fromUserId?.job || "No job info"}
                         </p>
                       </div>
                     </div>

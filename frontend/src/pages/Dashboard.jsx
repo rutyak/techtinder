@@ -26,7 +26,9 @@ function Dashboard() {
 
     console.log("userData in auth: ", JSON.parse(userDataFromGoogle));
 
-    dispatch(addUser(JSON.parse(userDataFromGoogle)));
+    if (JSON.parse(userDataFromGoogle)) {
+      dispatch(addUser(JSON.parse(userDataFromGoogle)));
+    }
   }, [location]);
 
   useEffect(() => {

@@ -112,7 +112,7 @@ describe("ChatWindow", () => {
     renderComponent();
 
     await waitFor(() => {
-      expect(mockSocket.emit).toHaveBeenCalledWith("joinChat", {
+      expect(mockSocket?.emit).toHaveBeenCalledWith("joinChat", {
         targetUserId: "123",
         firstname: "Jon",
       });
@@ -127,7 +127,7 @@ describe("ChatWindow", () => {
     await user.keyboard(`{Enter}`);
 
     await waitFor(() => {
-      expect(mockSocket.emit).toHaveBeenCalledWith("sendMessage", {
+      expect(mockSocket?.emit).toHaveBeenCalledWith("sendMessage", {
         firstname: "Jon",
         targetUserId: "123",
         text: "How r you?",
@@ -145,7 +145,7 @@ describe("ChatWindow", () => {
     await user.click(btn);
 
     await waitFor(() => {
-      expect(mockSocket.emit).toHaveBeenCalledWith("sendMessage", {
+      expect(mockSocket?.emit).toHaveBeenCalledWith("sendMessage", {
         firstname: "Jon",
         targetUserId: "123",
         text: "How r you?",

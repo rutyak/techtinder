@@ -27,7 +27,7 @@ function ChatWindow() {
 
   async function getChat() {
     try {
-      const res = await axios.get(`${base_url}/chat/${targetUser.id}`, {
+      const res = await axios.get(`${base_url}/chat/${targetUser?.id}`, {
         withCredentials: true,
       });
 
@@ -35,9 +35,9 @@ function ChatWindow() {
       const messages = chat?.messages;
       const formattedMessages =
         messages?.map((m) => ({
-          id: m._id,
-          text: m.text,
-          sender: m.senderId._id === userId ? "me" : "other",
+          id: m?._id,
+          text: m?.text,
+          sender: m.senderId?._id === userId ? "me" : "other",
         })) || [];
 
       setMessages(formattedMessages);
@@ -51,14 +51,14 @@ function ChatWindow() {
   }, [targetUser.id]);
 
   useEffect(() => {
-    if (!user._id || !targetUser.id) return;
+    if (!user?._id || !targetUser?.id) return;
 
     const socket = createSocketConnection();
     socketRef.current = socket;
 
-    socket.emit("joinChat", {
-      targetUserId: targetUser.id,
-      firstname: user.firstname,
+    socket?.emit("joinChat", {
+      targetUserId: targetUser?.id,
+      firstname: user?.firstname,
     });
 
     //receive message
@@ -76,26 +76,26 @@ function ChatWindow() {
     return () => {
       socket.disconnect();
     };
-  }, [userId, targetUser.id]);
+  }, [userId, targetUser?.id]);
 
   useEffect(() => {
-    if (!targetUser.id) return;
+    if (!targetUser?.id) return;
 
-    socketRef.current.emit("checkOnline", targetUser.id, (isOnline) => {
+    socketRef.current?.emit("checkOnline", targetUser?.id, (isOnline) => {
       setIsOnline(isOnline);
     });
-  }, [targetUser.id]);
+  }, [targetUser?.id]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   function handleSend() {
-    if (message.trim() === "" || !socketRef.current) return;
+    if (message?.trim() === "" || !socketRef?.current) return;
 
-    socketRef.current.emit("sendMessage", {
-      firstname: user.firstname,
-      targetUserId: targetUser.id,
+    socketRef.current?.emit("sendMessage", {
+      firstname: user?.firstname,
+      targetUserId: targetUser?.id,
       text: message,
     });
 
