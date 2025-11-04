@@ -27,8 +27,8 @@ function Herosection({ isScrollingUp, setIsScrollingUp }) {
         <span className="text-white">Match. Connect. Hired.</span>
       </h1>
 
-      <h2 className="text-sm md:text-md md:text-2xl font-medium text-white max-w-2xl mx-auto">
-        Where Tech Talent Meets Perfect Opportunities
+      <h2 className="text-sm md:text-md md:text-2xl font-light text-white max-w-2xl mx-auto">
+        A networking platform where knowledge meets knowledge
       </h2>
     </div>
   );

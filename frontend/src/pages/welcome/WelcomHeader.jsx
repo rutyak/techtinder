@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Login from "../auth/Auth";
-import TechTinderIcon from "../../assets/icons/TechTinderIcon.svg";
+import connectEdgeIcon from "../../assets/icons/connectEdgeIcon.svg";
 
 function WelcomHeader({ isScrollingUp }) {
   return (
@@ -16,9 +16,9 @@ function WelcomHeader({ isScrollingUp }) {
         <div className="flex items-center justify-between max-w-[1500px] mx-auto h-16 md:h-20 px-5 md:px-8 lg:px-16">
           <div className="flex items-center gap-2 text-lg sm:text-xl md:text-3xl font-extrabold bg-gradient-to-r from-blue-800 via-blue-600 to-blue-400 text-transparent bg-clip-text tracking-tight drop-shadow-lg hover:drop-shadow-xl transition-all duration-300 mb-1 sm:mb-2 cursor-default">
             <img
-              src={TechTinderIcon}
-              alt="techTinderIcon"
-              className="h-10 w-10"
+              src={connectEdgeIcon}
+              alt="connectEdgeIcon"
+              className="h-12 w-12"
             />
             <span>ConnectEdge</span>
           </div>

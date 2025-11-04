@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { addFeeds, removeFeeds } from "../../utils/feedSlice";
-import TechTinderIconInner from "../../assets/icons/TechTinderIconInner.svg";
+import connectEdgeInnerIcon from "../../assets/icons/connectEdgeIconInner.svg";
 import { useNavigate } from "react-router-dom";
 import { removeUser } from "../../utils/userSlice";
 import Card from "./Card";
@@ -116,8 +116,8 @@ function FeedCards({
       {/* Label / Icon */}
       {showLabels && !isPreview && (
         <img
-          src={TechTinderIconInner}
-          alt="techTinderIcon"
+          src={connectEdgeInnerIcon}
+          alt="connectEdgeIcon"
           className="h-8 w-8 text-gray-300 my-3 hidden sm:block"
         />
       )}

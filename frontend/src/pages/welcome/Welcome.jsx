@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import bgImage from "../../assets/TechTinder_bg.jpg";
+import bgImage from "../../assets/ConnectEdge_bg.jpg";
 import Reviews from "./Reviews";
 import Footer from "./Footer";
 import WelcomHeader from "./WelcomHeader";

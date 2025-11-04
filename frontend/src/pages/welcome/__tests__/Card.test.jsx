@@ -11,13 +11,13 @@ describe("Card", () => {
       name: "Rutik",
       position: "MERN stact developer",
       rating: 4.9,
-      text: "Techtinder is a great application",
+      text: "ConnectEdge is a great application",
     });
     expect(screen.getByText(/Rutik/i)).toBeInTheDocument();
     expect(screen.getByText(/MERN stact developer/i)).toBeInTheDocument();
     expect(screen.getByText(/4.9/i)).toBeInTheDocument();
     expect(
-      screen.getByText(/Techtinder is a great application/i)
+      screen.getByText(/ConnectEdge is a great application/i)
     ).toBeInTheDocument();
   });
 });
