@@ -15,7 +15,7 @@ function Header() {
 
   const requests = useSelector((state) => state.requests);
 
-  const totalRequests = requests.filter((req) => req.fromUserId !== null);
+  const totalRequests = requests?.filter((req) => req.fromUserId !== null);
 
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
 

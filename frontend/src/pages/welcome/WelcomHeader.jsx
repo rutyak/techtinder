@@ -18,7 +18,7 @@ function WelcomHeader({ isScrollingUp }) {
             <img
               src={connectEdgeIcon}
               alt="connectEdgeIcon"
-              className="h-12 w-12"
+              className="h-7 w-7 md:h-9 md:w-9 lg:h-12 lg:w-12"
             />
             <span>ConnectEdge</span>
           </div>
