@@ -69,8 +69,11 @@ function logout(req, res) {
 }
 
 async function sendOtp(req, res) {
+  console.log("send otp hit$$$$$$$$$$$$$");
   try {
     const { email } = req.body;
+
+    console.log("email in sendOTP: ", email);
 
     if (!email) return res.status(400).json({ message: "Email is required" });
 
