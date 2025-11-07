@@ -4,6 +4,12 @@ const validatePassword = require("../utils/validatePassword");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
+console.log("ENV check:", {
+  user: process.env.EMAIL_USER ? "Set" : "NOT SET",
+  pass: process.env.EMAIL_PASS ? "Set" : "NOT SET",
+  node_env: process.env.NODE_ENV,
+});
+
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
@@ -35,7 +41,6 @@ async function signUp(req, res) {
 }
 
 async function login(req, res) {
-
   try {
     const { email, password } = req.body;
 
@@ -74,6 +79,15 @@ function logout(req, res) {
 
 async function sendOtp(req, res) {
   try {
+    await transporter.verify(function (error, success) {
+      if (error) {
+        console.log("SMIP Verification FAILED: ", error);
+        throw error;
+      } else {
+        console.log("SMIP server is ready to take our message");
+      }
+    });
+    
     const { email } = req.body;
 
     if (!email) return res.status(400).json({ message: "Email is required" });
