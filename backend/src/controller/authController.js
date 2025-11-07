@@ -12,12 +12,15 @@ console.log("ENV check:", {
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
+  port: 587,
+  secure: false,
+  requireTLS: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  connectionTimeout: 30000,
+  socketTimeout: 30000,
 });
 
 async function signUp(req, res) {
@@ -87,7 +90,7 @@ async function sendOtp(req, res) {
         console.log("SMIP server is ready to take our message");
       }
     });
-    
+
     const { email } = req.body;
 
     if (!email) return res.status(400).json({ message: "Email is required" });
