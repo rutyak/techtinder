@@ -24,8 +24,6 @@ function Dashboard() {
     const params = new URLSearchParams(location?.search);
     const userDataFromGoogle = params.get("user");
 
-    console.log("userData in auth: ", JSON.parse(userDataFromGoogle));
-
     if (JSON.parse(userDataFromGoogle)) {
       dispatch(addUser(JSON.parse(userDataFromGoogle)));
     }

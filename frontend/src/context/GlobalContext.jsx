@@ -24,8 +24,6 @@ export function GlobalProvider({ children }) {
         withCredentials: true,
       });
 
-      console.log(res.data?.data);
-
       dispatch(addConnections(res.data?.data));
     } catch (error) {
       console.error(error);

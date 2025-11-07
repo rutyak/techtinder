@@ -11,7 +11,6 @@ const User = require("../model/user");
 require("dotenv").config();
 
 const createOrder = async (req, res) => {
-  console.log("create payment is called...");
   try {
     const { membershipType } = req.body;
     const { firstname, lastname, email } = req.user;
@@ -56,8 +55,6 @@ const createOrder = async (req, res) => {
 };
 
 const webhook = async (req, res) => {
-  console.log("webhook is called...: ", req.body);
-
   try {
     const webhookSignature = req.get("X-Razorpay-Signature");
 
@@ -68,8 +65,6 @@ const webhook = async (req, res) => {
       webhookSignature,
       process.env.RAZORPAY_WEBHOOK_SECRET
     );
-
-    console.log("isWebhookValid: ", isWebhookValid);
 
     if (!isWebhookValid) {
       return res.status(400).json({ message: "Webhook signature is invalid" });
@@ -94,8 +89,6 @@ const webhook = async (req, res) => {
 
     const user = await User.findById(payment.userId);
     
-    console.log("paymentDetails webhook: ", paymentDetails);
-
     if (user && paymentDetails.status == "captured") {
       user.isPremium = true;
       user.membershipType = payment.notes.membershipType;
@@ -113,7 +106,6 @@ const webhook = async (req, res) => {
 };
 
 const paymentVerification = async (req, res) => {
-  console.log("payment varification is called...");
 
   let user = req.user;
 

@@ -33,8 +33,6 @@ authRouter.get(
   async (req, res) => {
     try {
       const user = req.user;
-      console.log("user in final google call: ", user);
-      console.log("local client env: ", process.env.CLIENT_URL_LOCAL);
 
       const token = await user.generateAuthToken();
 
@@ -50,13 +48,9 @@ authRouter.get(
           ? `${process.env.CLIENT_URL}/dashboard`
           : `${process.env.CLIENT_URL_LOCAL}/dashboard`;
 
-      console.log("redirected url: ", redirectURL);
-
       const query = new URLSearchParams({
         user: JSON.stringify(user),
       }).toString();
-
-      console.log(" redirected query user: ", query);
 
       res.redirect(`${redirectURL}?${query}`);
     } catch (error) {

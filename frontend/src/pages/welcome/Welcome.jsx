@@ -11,8 +11,6 @@ function Welcome() {
   const [isScrollingUp, setIsScrollingUp] = useState(false);
   const userData = useSelector((state) => state.user);
 
-  console.log("user in welcome: ", userData);
-
   const navigate = useNavigate();
 
   useEffect(() => {

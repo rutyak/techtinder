@@ -7,14 +7,10 @@ const { default: mongoose } = require("mongoose");
 const requestRouter = express.Router();
 
 const requestSend = async (req, res) => {
-  console.log("request send hit");
-
   try {
     const fromUserId = req.user._id;
     const toUserId = req.params.id;
     const status = req.params.status;
-
-    console.log("status in api: ", status);
 
     const isValidUserId = await User.findById(toUserId);
     if (!isValidUserId) {
@@ -47,8 +43,6 @@ const requestSend = async (req, res) => {
       toUserId,
       status,
     });
-
-    console.log("connectionReq in api: ", connectionReq);
 
     res.status(201).json({
       message: "Request sent successfully",

@@ -5,8 +5,6 @@ require("dotenv").config();
 
 const isProduction = process.env.NODE_ENV === "production";
 
-console.log("process.env.BASE_URL :", process.env.BASE_URL_LOCAL);
-
 passport.use(
   new GoogleStrategy(
     {

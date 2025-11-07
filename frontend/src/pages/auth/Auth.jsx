@@ -81,8 +81,6 @@ function Auth() {
           toast.success(res.data?.message, { toastId: "authToast" });
         }
 
-        console.log("res.data?.user: ", res.data?.user);
-
         if (res.data?.user) {
           dispatch(addUser(res.data?.user));
         }
@@ -96,7 +94,6 @@ function Auth() {
         const res = await axios.post(`${base_url}/send-otp`, {
           email: formData.email,
         });
-        console.log("res from sendOTP: ", res.data);
         if (!toast.isActive("forgetPassToast")) {
           toast.success(res.data?.message, { toastId: "forgetPassToast" });
         }

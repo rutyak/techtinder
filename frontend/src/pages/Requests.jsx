@@ -12,8 +12,6 @@ const Requests = () => {
 
   const requests = useSelector((state) => state.requests);
 
-  console.log("requests: ", requests);
-
   const dispatch = useDispatch();
 
   const handleAccept = async (id) => {

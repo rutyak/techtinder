@@ -108,6 +108,7 @@ userSchema.methods.hashPassword = async function (password) {
 
 userSchema.methods.passwordCompare = async function (password) {
   if (!password) throw new Error("Password is invalid");
+  if (!this.password) throw new Error("Invalid password");
   return await bcrypt.compare(password, this.password);
 };
 
