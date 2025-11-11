@@ -45,7 +45,7 @@ function Welcome() {
         setIsScrollingUp={setIsScrollingUp}
       />
 
-      <div className="bg-gradient-to-br from-gray-50 to-indigo-50 py-10">
+      <div className="bg-gradient-to-br from-gray-50 to-indigo-50">
         <Reviews />
         <Footer />
       </div>

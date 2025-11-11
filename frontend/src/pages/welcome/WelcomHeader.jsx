@@ -14,13 +14,13 @@ function WelcomHeader({ isScrollingUp }) {
         }`}
       >
         <div className="flex items-center justify-between max-w-[1500px] mx-auto h-16 md:h-20 px-5 md:px-8 lg:px-16">
-          <div className="flex items-center gap-2 text-lg sm:text-xl md:text-3xl font-extrabold bg-gradient-to-r from-blue-800 via-blue-600 to-blue-400 text-transparent bg-clip-text tracking-tight drop-shadow-lg hover:drop-shadow-xl transition-all duration-300 mb-1 sm:mb-2 cursor-default">
+          <div className="flex items-center text-lg sm:text-xl md:text-3xl font-extrabold bg-gradient-to-r from-blue-800 via-blue-600 to-blue-400 text-transparent bg-clip-text tracking-tight drop-shadow-lg hover:drop-shadow-xl transition-all duration-300 mb-1 sm:mb-2 cursor-default">
             <img
               src={connectEdgeIcon}
               alt="connectEdgeIcon"
-              className="h-7 w-7 md:h-9 md:w-9 lg:h-12 lg:w-12"
+              className="h-8 w-8 md:h-12 md:w-12 lg:h-14 lg:w-14"
             />
-            <span>ConnectEdge</span>
+            <span className="text-md md:text-[22px] lg:text-[28px]">ConnectEdge</span>
           </div>
 
           <div className="flex gap-8 items-center">

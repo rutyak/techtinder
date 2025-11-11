@@ -47,9 +47,7 @@ function Dashboard() {
         error.response?.data?.message === "Please login"
       ) {
         if (!toast.isActive("authExpiredToast")) {
-          toast.error("Please log in again.", {
-            toastId: "authExpiredToast",
-          });
+          toast.error("Please log in again.", { toastId: "authExpiredToast" });
         }
         dispatch(removeUser());
         navigate("/");

@@ -6,45 +6,45 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   const linkStyle =
-    "text-gray-400 hover:text-white font-sm text-sm sm:font-medium";
+    "text-gray-400 hover:text-white font-sm text-xs md:text-sm";
 
   return (
-    <footer className="text-gray-300 py-16 px-4">
+    <footer className="text-gray-300 py-8 md:py-16 px-4">
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         {/* Social Icons */}
         <div className="flex justify-center gap-6 mb-8">
-          <a
-            href="#"
+          <Link
+            to="#"
             aria-label="Facebook"
-            className="p-2 rounded-full hover:bg-gray-700"
+            className="p-2 rounded-full hover:bg-gray-700 text-xs"
           >
             <FaFacebook className="w-6 h-6 text-gray-500 hover:text-white" />
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="#"
             aria-label="Twitter"
             className="p-2 rounded-full hover:bg-gray-700"
           >
             <FaSquareXTwitter className="w-6 h-6 text-gray-500 hover:text-white" />
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="#"
             aria-label="Instagram"
             className="p-2 rounded-full hover:bg-gray-700"
           >
             <IoLogoYoutube className="w-6 h-6 text-gray-500 hover:text-white" />
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="#"
             aria-label="YouTube"
             className="p-2 rounded-full hover:bg-gray-700"
           >
             <AiFillInstagram className="w-6 h-6 text-gray-500 hover:text-white" />
-          </a>
+          </Link>
         </div>
 
         {/* Navigation Links */}
-        <nav className="flex flex-wrap justify-center gap-6 mb-8">
+        <nav className="flex flex-wrap justify-center gap-6 mb-8 text-sm">
           <Link to="/" className={linkStyle}>
             Home
           </Link>
@@ -82,7 +82,7 @@ function Footer() {
 
         {/* Razorpay Payment Disclaimer */}
         <div className="text-center">
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-500 text-xs md:text-sm">
             Payments are securely processed via{" "}
             <a
               href="https://razorpay.com/"
@@ -103,10 +103,10 @@ function Footer() {
 
         {/* Copyright */}
         <div className="text-center mt-6">
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-500 text-xs md:text-sm">
             © {new Date().getFullYear()} ConnectEdge. All rights reserved.
           </p>
-          <p className="text-gray-600 text-xs mt-2">
+          <p className="text-gray-600 text-xs md:text-sm mt-2">
             Designed with ❤️ by Rutik Khandekar
           </p>
         </div>

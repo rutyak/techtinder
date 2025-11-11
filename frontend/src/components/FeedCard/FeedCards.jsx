@@ -62,8 +62,8 @@ function FeedCards({
     } catch (error) {
       const msg = error.response?.data?.message;
       if (msg === "jwt expired" || msg === "Please login") {
-        if (!toast.isActive("tokenExpired")) {
-          toast.error("Please log in again", { toastId: "tokenExpired" });
+        if (!toast.isActive("authExpiredToast")) {
+          toast.error("Please log in again", { toastId: "authExpiredToast" });
         }
         dispatch(removeUser());
         navigate("/");
