@@ -19,8 +19,6 @@ const app = express();
 const server = http.createServer(app);
 initializeSocket(server);
 
-app.use("/uploads", express.static("uploads"));
-
 const corsOptions = {
   origin: ["http://localhost:5173", "https://connectedge.netlify.app"],
   methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
@@ -37,10 +35,11 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
-app.use(passport.initialize());
 app.use(cors(corsOptions));
+app.use(passport.initialize());
 app.use(express.json());
 app.use(cookieParser());
+app.use("/uploads", express.static("uploads"));
 
 app.use(authRouter);
 app.use(profileRouter);
