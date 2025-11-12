@@ -9,10 +9,28 @@ console.log("ENV check:", process.env.NODEMAILER_KEY, process.env.EMAIL_USER);
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
+  secure: false, // Use TLS
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  tls: {
+    // Do not fail on invalid certs
+    rejectUnauthorized: false,
+  },
+  // Production optimizations
+  connectionTimeout: 30000,
+  greetingTimeout: 30000,
+  socketTimeout: 60000,
+});
+
+// Verify configuration on startup
+transporter.verify(function (error, success) {
+  if (error) {
+    console.log("SMTP Connection Failed:", error);
+  } else {
+    console.log("SMTP Server is ready to take messages");
+  }
 });
 
 async function signUp(req, res) {
