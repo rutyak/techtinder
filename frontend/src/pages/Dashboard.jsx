@@ -29,8 +29,6 @@ function Dashboard() {
     }
   }, [location]);
 
-  console.log("userData in dashboard: ", userData);
-
   useEffect(() => {
     if (userData === null) {
       navigate("/");

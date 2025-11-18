@@ -25,7 +25,6 @@ describe("ChatList", () => {
   ];
 
   const createStore = (preloadedState) => {
-    console.log("preloaded state in test: ", preloadedState);
 
     return configureStore({
       reducer: {

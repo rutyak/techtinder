@@ -73,7 +73,6 @@ describe("Premium", () => {
     const subscribeBtn = screen.getAllByRole("button", {
       name: /Subscribe Now/i,
     });
-    console.log("subscribeBtn's: ", subscribeBtn);
     await user.click(subscribeBtn[0]);
 
     expect(axios.post).toHaveBeenCalledWith(

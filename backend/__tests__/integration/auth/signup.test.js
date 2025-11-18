@@ -83,7 +83,6 @@ describe("POST /signup", () => {
     }
 
     expect(res.statusCode).toBe(500);
-    console.log("body check : ", res.body);
     expect(res.body).toHaveProperty("message");
     expect(res.body.message).toBe("Email is invalid");
   });

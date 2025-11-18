@@ -27,8 +27,6 @@ describe("ChangePassword", () => {
       status: 200,
     });
 
-    console.log("mocking axios : ", axios.post);
-
     renderComponent({
       showPasswordFields: true,
       setShowPasswordFields: vi.fn(),
@@ -56,8 +54,6 @@ describe("ChangePassword", () => {
     axios.patch.mockRejectedValue({
       response: { data: { message: "Invalid old password" }, status: 400 },
     });
-
-    console.log("mocking axios : ", axios.post);
 
     renderComponent({
       showPasswordFields: true,

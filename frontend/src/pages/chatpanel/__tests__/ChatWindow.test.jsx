@@ -102,7 +102,6 @@ describe("ChatWindow", () => {
 
     renderComponent();
     const backbtn = screen.getByTestId("back");
-    console.log("button exits: ", backbtn);
 
     await user.click(backbtn);
     expect(mockNavigate).toHaveBeenCalled("/dashboard");

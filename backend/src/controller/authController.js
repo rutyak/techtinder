@@ -4,33 +4,21 @@ const validatePassword = require("../utils/validatePassword");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
-console.log("ENV check:", process.env.NODEMAILER_KEY, process.env.EMAIL_USER);
+console.log("ENV check:", process.env.NODEMAILER_KEY);
+console.log("process.env.EMAIL_USER: ", process.env.SENDER_EMAIL);
+console.log("user: ", process.env.SMTP_USER, "pass:", process.env.SMTP_PASS);
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "smtp-relay.brevo.com",
   port: 587,
-  secure: false, // Use TLS
+  secure: false,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
   },
   tls: {
-    // Do not fail on invalid certs
     rejectUnauthorized: false,
   },
-  // Production optimizations
-  connectionTimeout: 30000,
-  greetingTimeout: 30000,
-  socketTimeout: 60000,
-});
-
-// Verify configuration on startup
-transporter.verify(function (error, success) {
-  if (error) {
-    console.log("SMTP Connection Failed:", error);
-  } else {
-    console.log("SMTP Server is ready to take messages");
-  }
 });
 
 async function signUp(req, res) {
@@ -103,6 +91,8 @@ async function sendOtp(req, res) {
 
     const { email } = req.body;
 
+    console.log("User enail: ", email);
+
     if (!email) return res.status(400).json({ message: "Email is required" });
 
     const user = await User.findOne({ email });
@@ -116,7 +106,7 @@ async function sendOtp(req, res) {
     await user.save();
 
     await transporter.sendMail({
-      from: `"ConnectEdge Support" <${process.env.EMAIL_USER}>`,
+      from: `"ConnectEdge Support" <${process.env.SENDER_EMAIL}>`,
       to: email,
       subject: "Password Reset OTP",
       text: `Your OTP is ${otp}. It is valid for 10 minutes.`,
