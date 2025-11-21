@@ -14,7 +14,7 @@ const base_url = import.meta.env.VITE_APP_BACKEND_URL;
 function Dashboard() {
   const { getConnections } = useGlobalVariable();
 
-  const userData = useSelector((state) => state.users);
+  const userData = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -68,7 +68,7 @@ function Dashboard() {
     >
       <div className="fixed z-50 w-full h-[65px] lg:h-screen lg:max-w-[340px] flex flex-col border-r border-gray-200">
         <Header />
-        <div className="hidden lg:block">
+        <div className="hidden lg:block md:bg-gray-50 flex-1">
           <ChatList />
         </div>
       </div>

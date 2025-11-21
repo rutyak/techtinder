@@ -3,8 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { addUser } from "../../utils/userSlice";
-import { useLocation, useNavigate } from "react-router-dom";
-import Input from "../../components/ui/Input";
+import { useNavigate } from "react-router-dom";
 import ResetPassword from "./ResetPassword";
 import Login from "./Login";
 import SignUp from "./SignUp";
@@ -21,7 +20,6 @@ function Auth() {
   const modelRef = useRef(null);
 
   
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -81,9 +79,7 @@ function Auth() {
           toast.success(res.data?.message, { toastId: "authToast" });
         }
 
-        if (res.data?.user) {
-          dispatch(addUser(res.data?.user));
-        }
+        dispatch(addUser(res.data?.user));
 
         setLoginToggle(false);
         if (res.status === 200) {
