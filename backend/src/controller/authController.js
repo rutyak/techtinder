@@ -4,10 +4,6 @@ const validatePassword = require("../utils/validatePassword");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
-console.log("ENV check:", process.env.NODEMAILER_KEY);
-console.log("process.env.EMAIL_USER: ", process.env.SENDER_EMAIL);
-console.log("user: ", process.env.SMTP_USER, "pass:", process.env.SMTP_PASS);
-
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
   port: 587,
@@ -59,6 +55,7 @@ async function login(req, res) {
     if (!isValidPassword) {
       return res.status(400).json({ message: "Invalid password" });
     }
+    
     const token = await user.generateAuthToken();
 
     res.cookie("jwtToken", token, {
@@ -80,18 +77,7 @@ function logout(req, res) {
 
 async function sendOtp(req, res) {
   try {
-    await transporter.verify(function (error, success) {
-      if (error) {
-        console.log("SMIP Verification FAILED: ", error);
-        throw error;
-      } else {
-        console.log("SMIP server is ready to take our message");
-      }
-    });
-
     const { email } = req.body;
-
-    console.log("User enail: ", email);
 
     if (!email) return res.status(400).json({ message: "Email is required" });
 
