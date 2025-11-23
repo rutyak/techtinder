@@ -4,6 +4,9 @@ const User = require("../model/user");
 const userAuth = async (req, res, next) => {
   try {
     const token = req.cookies.jwtToken;
+
+    console.log("token in backend: ", token);
+
     if (!token) {
       return res.status(400).json({ message: "Please login" });
     }
