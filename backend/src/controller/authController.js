@@ -57,7 +57,9 @@ async function login(req, res) {
     }
     
     const token = await user.generateAuthToken();
-
+    
+    console.log("login token ###:", token);
+    
     res.cookie("jwtToken", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
