@@ -2,20 +2,22 @@ const User = require("../model/user");
 const validateSignup = require("../utils/validateSignup");
 const validatePassword = require("../utils/validatePassword");
 const nodemailer = require("nodemailer");
+const crypto = require("crypto");
+const axios = require("axios");
 require("dotenv").config();
 
-const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-  tls: {
-    rejectUnauthorized: false,
-  },
-});
+// const transporter = nodemailer.createTransport({
+//   host: "smtp-relay.brevo.com",
+//   port: 587,
+//   secure: false,
+//   auth: {
+//     user: process.env.SMTP_USER,
+//     pass: process.env.SMTP_PASS,
+//   },
+//   tls: {
+//     rejectUnauthorized: false,
+//   },
+// });
 
 async function signUp(req, res) {
   try {
@@ -55,11 +57,11 @@ async function login(req, res) {
     if (!isValidPassword) {
       return res.status(400).json({ message: "Invalid password" });
     }
-    
+
     const token = await user.generateAuthToken();
-    
+
     console.log("login token ###:", token);
-    
+
     res.cookie("jwtToken", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -78,33 +80,58 @@ function logout(req, res) {
 }
 
 async function sendOtp(req, res) {
+  console.log("process.env.BREVO_API_KEY: ", process.env.BREVO_API_KEY);
+  console.log("process.env.SENDER_EMAIL: ", process.env.SENDER_EMAIL);
+
   try {
     const { email } = req.body;
 
-    if (!email) return res.status(400).json({ message: "Email is required" });
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiry = Date.now() + 10 * 60 * 10000;
+    const expiry = Date.now() + 10 * 60 * 1000;
 
     user.resetOtp = otp;
     user.resetOtpExpiry = expiry;
-    await user.save();
+    await user.save({ validateBeforeSave: false });
 
-    await transporter.sendMail({
-      from: `"ConnectEdge Support" <${process.env.SENDER_EMAIL}>`,
-      to: email,
-      subject: "Password Reset OTP",
-      text: `Your OTP is ${otp}. It is valid for 10 minutes.`,
-    });
+    await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: `ConnectEdge Support <${process.env.SENDER_EMAIL}>`,
+          email: process.env.SENDER_EMAIL,
+        },
+        to: [{ email }],
+        subject: "Your ConnectEdge OTP",
+        htmlContent: `
+          <h3>Your OTP Code</h3>
+          <p>Your OTP is <strong>${otp}</strong>.</p>
+          <p>This OTP is valid for 10 minutes.</p>
+        `,
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     res.status(200).json({ message: "OTP sent successfully" });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Internal server error", error: error?.message });
+    console.error(error.message);
+    res.status(500).json({
+      message: "Error sending OTP email",
+      error: error?.response?.data || error?.message,
+    });
   }
 }
 
