@@ -60,8 +60,6 @@ async function login(req, res) {
 
     const token = await user.generateAuthToken();
 
-    console.log("login token ###:", token);
-
     res.cookie("jwtToken", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -80,9 +78,6 @@ function logout(req, res) {
 }
 
 async function sendOtp(req, res) {
-  console.log("process.env.BREVO_API_KEY: ", process.env.BREVO_API_KEY);
-  console.log("process.env.SENDER_EMAIL: ", process.env.SENDER_EMAIL);
-
   try {
     const { email } = req.body;
 
@@ -103,10 +98,10 @@ async function sendOtp(req, res) {
     await user.save({ validateBeforeSave: false });
 
     await axios.post(
-      "https://api.brevo.com/v3/smtp/email",
+      process.env.BREVO_API,
       {
         sender: {
-          name: `ConnectEdge Support <${process.env.SENDER_EMAIL}>`,
+          name: "ConnectEdge Support",
           email: process.env.SENDER_EMAIL,
         },
         to: [{ email }],

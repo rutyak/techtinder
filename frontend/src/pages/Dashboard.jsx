@@ -42,8 +42,8 @@ function Dashboard() {
       });
       dispatch(addRequests(res.data?.requests));
     } catch (error) {
-      console.log(error);
-      
+      console.error(error.message);
+
       if (
         error.response?.data?.message === "jwt expired" ||
         error.response?.data?.message === "Please login"
