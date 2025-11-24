@@ -51,7 +51,7 @@ const Requests = () => {
   return (
     <div className="px-5 sm:px-8 xl:px-0 w-full">
       <div className="max-w-4xl mx-auto rounded-2xl">
-        <h2 className="text-xl md:text-2xl xl:text-3xl font-bold text-blue-700 mt-4 mb-6 lg:m-10 xl:m-12 text-center">
+        <h2 className="text-xl md:text-2xl xl:text-3xl font-bold text-blue-500 mt-4 mb-14 lg:m-10 xl:m-12 text-center">
           Pending Requests
         </h2>
 

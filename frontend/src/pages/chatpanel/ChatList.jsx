@@ -50,7 +50,7 @@ function ChatList() {
 
   return (
     <div className="h-full flex-1 overflow-y-auto">
-      <h3 className="px-4 pt-2 pb-2 text-gray-500 font-medium">Chats</h3>
+      <h3 className="px-4 pt-2 pb-2 text-blue-500 font-medium">Chats</h3>
       <div className="space-y-2 px-2">
         {filteredConnections && filteredConnections?.length > 0 ? (
           filteredConnections?.map(
