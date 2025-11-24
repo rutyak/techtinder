@@ -21,7 +21,7 @@ function Header() {
 
   return (
     <div className="h-full lg:h-[122px] relative md:bg-gradient-to-r from-blue-400 to-[#02060d] p-4 md:pb-6">
-      <div className="flex items-center justify-between md:mb-4">
+      <div className="flex items-center justify-between z-50 md:mb-4">
         <div
           onClick={(e) => {
             e.stopPropagation();

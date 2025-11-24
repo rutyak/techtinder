@@ -51,12 +51,12 @@ const Requests = () => {
   return (
     <div className="px-5 sm:px-8 xl:px-0 w-full">
       <div className="max-w-4xl mx-auto rounded-2xl">
-        <h2 className="text-xl md:text-2xl xl:text-3xl font-bold text-blue-500 mt-4 mb-14 lg:m-10 xl:m-12 text-center">
+        <h2 className="px-4 pt-2 pb-2 text-blue-500 font-medium my-3 md:my-6 text-lg md:text-xl text-center">
           Pending Requests
         </h2>
 
         {requests?.length === 0 ? (
-          <p className="text-center text-gray-500">No pending requests.</p>
+          <p className="text-sm md:text-md text-center text-gray-500">No pending requests.</p>
         ) : (
           <div className="space-y-6">
             {requests?.map(

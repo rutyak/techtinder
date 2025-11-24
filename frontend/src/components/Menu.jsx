@@ -56,7 +56,7 @@ function Menu({ setIsOpenDropdown }) {
       <div
         ref={dropdownRef}
         onClick={(e) => e.stopPropagation()}
-        className="absolute w-full top-[55px] left-6 z-20 max-w-[200px] bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden"
+        className="absolute w-full top-[55px] left-6 z-50 max-w-[200px] bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden"
       >
         <Link
           className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 transition-all"
