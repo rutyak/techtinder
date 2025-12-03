@@ -2,13 +2,13 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { removeRequest } from "../utils/requestsSlice";
-import { useGlobalVariable } from "../context/GlobalContext";
 import { FaHeart } from "react-icons/fa"; 
+import { useConnectionsContext } from "../context/ConnectionsContext";
 
 const base_url = import.meta.env.VITE_APP_BACKEND_URL;
 
 const Requests = () => {
-  const { getConnections } = useGlobalVariable();
+  const { getConnections } = useConnectionsContext();
 
   const requests = useSelector((state) => state.requests);
 

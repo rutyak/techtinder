@@ -6,11 +6,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Menu from "./Menu";
 import { RiChat1Line } from "react-icons/ri";
-import { useGlobalVariable } from "../context/GlobalContext";
 
-function Header() {
-  const { setSearch } = useGlobalVariable();
-
+function Header({ search, setSearch }) {
   const user = useSelector((state) => state.user);
 
   const requests = useSelector((state) => state.requests);
@@ -67,6 +64,7 @@ function Header() {
         <input
           type="text"
           placeholder="Search a person"
+          value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full bg-white/20 text-white placeholder:text-white/80 rounded-full pl-10 pr-4 py-2 focus:ring-2 focus:ring-white focus:bg-white/30 outline-none"
         />

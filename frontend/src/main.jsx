@@ -12,10 +12,11 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Requests from "./pages/Requests.jsx";
 import Profile from "./pages/profile/Profile.jsx";
 import FeedCards from "./components/FeedCard/FeedCards.jsx";
-import { GlobalProvider } from "./context/GlobalContext.jsx";
 import Premium from "./pages/Premium.jsx";
 import ChatWindow from "./pages/chatpanel/ChatWindow.jsx";
 import ChatList from "./pages/chatpanel/ChatList.jsx";
+import { ConnectionsProvider } from "./context/ConnectionsContext.jsx";
+import { RequestsProvider } from "./context/RequestsContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -62,10 +63,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <GlobalProvider>
-          <ToastContainer />
-          <RouterProvider router={router} />
-        </GlobalProvider>
+        <RequestsProvider>
+          <ConnectionsProvider>
+            <ToastContainer />
+            <RouterProvider router={router} />
+          </ConnectionsProvider>
+        </RequestsProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>

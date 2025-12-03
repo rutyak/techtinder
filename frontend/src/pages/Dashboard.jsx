@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Header from "../components/Header";
@@ -7,14 +7,16 @@ import { toast } from "react-toastify";
 import { addRequests } from "../utils/requestsSlice";
 import ChatList from "./chatpanel/ChatList";
 import { addUser, removeUser } from "../utils/userSlice";
-import { useGlobalVariable } from "../context/GlobalContext";
+import { useConnectionsContext } from "../context/ConnectionsContext";
 
 const base_url = import.meta.env.VITE_APP_BACKEND_URL;
 
 function Dashboard() {
-  const { getConnections } = useGlobalVariable();
+  const { getConnections } = useConnectionsContext();
 
   const userData = useSelector((state) => state.user);
+
+  const [search, setSearch] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -69,9 +71,9 @@ function Dashboard() {
       className="h-[100dvh] flex flex-col lg:flex-row items-center"
     >
       <div className="fixed z-50 w-full h-[65px] lg:h-screen lg:max-w-[340px] flex flex-col border-r border-gray-200">
-        <Header />
+        <Header search={search} setSearch={setSearch} />
         <div className="hidden lg:block md:bg-gray-50 flex-1">
-          <ChatList />
+          <ChatList search={search} />
         </div>
       </div>
 

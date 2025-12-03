@@ -107,7 +107,6 @@ async function sendOtp(req, res) {
         to: [{ email }],
         subject: "Your ConnectEdge OTP",
         htmlContent: `
-          <h3>Your OTP Code</h3>
           <p>Your OTP is <strong>${otp}</strong>.</p>
           <p>This OTP is valid for 10 minutes.</p>
         `,
