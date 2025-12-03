@@ -25,7 +25,7 @@ coverage
 *.sln
 *.sw?
 
-
+.env
 frontend/.env
 backend/.env
 
